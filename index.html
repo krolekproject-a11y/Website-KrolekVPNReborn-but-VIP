@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>KrolekVPN — VIP подписка</title>
+    <title>KrolekVPNReborn — VIP подписка</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -16,7 +16,7 @@
             position: relative;
         }
         
-        /* Анимированный фон — оранжевый, чёрный, жёлтый */
+        /* Анимированный фон */
         body::before {
             content: '';
             position: fixed;
@@ -24,7 +24,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 165, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 40%, rgba(0, 0, 0, 0.9) 80%);
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.05) 50%, rgba(0, 0, 0, 0.9) 80%);
             animation: vipPulse 8s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: 0;
@@ -37,7 +37,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 70% 80%, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.05) 50%, transparent 80%);
+            background: radial-gradient(circle at 70% 80%, rgba(255, 215, 0, 0.08) 0%, rgba(255, 165, 0, 0.03) 50%, transparent 80%);
             animation: vipPulseReverse 10s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: 0;
@@ -123,9 +123,15 @@
         .nav-links a:hover { color: #ffd700; }
         
         .hero {
-            text-align: center;
-            padding: 50px 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 40vh;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 40px 0;
         }
+        .hero-content { flex: 1; }
         
         .hero-badge {
             display: inline-block;
@@ -158,19 +164,20 @@
         .hero p {
             font-size: 18px;
             color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 500px;
         }
         
         .hero-stats {
             display: flex;
-            justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin-top: 30px;
         }
         
-        .stat-number { font-size: 28px; font-weight: 700; color: #ffd700; }
-        .stat-label { font-size: 13px; color: #aaa; }
+        .stat-number { font-size: 32px; font-weight: 700; color: #ffd700; }
+        .stat-label { font-size: 14px; color: #aaa; }
+        
+        .hero-image { flex: 1; text-align: center; }
+        .hero-image i { font-size: 250px; color: rgba(255, 215, 0, 0.2); }
         
         /* VIP-карточка */
         .vip-card {
@@ -351,6 +358,7 @@
             .vip-features { gap: 15px; }
             .navbar { flex-direction: column; text-align: center; }
             .step { flex-wrap: wrap; text-align: center; justify-content: center; }
+            .hero-image i { font-size: 150px; }
         }
 
         .toast {
@@ -377,7 +385,7 @@
         <nav class="navbar">
             <div class="logo">
                 <i class="fas fa-crown"></i>
-                <span>KrolekVPN</span>
+                <span>KrolekVPNReborn</span>
                 <span class="vip-badge">VIP</span>
             </div>
             <div class="nav-links">
@@ -388,24 +396,29 @@
         </nav>
 
         <div class="hero">
-            <div class="hero-badge">✦ ПРЕМИУМ ДОСТУП ✦</div>
-            <h1>VIP <span>Подписка</span></h1>
-            <p>Максимальная скорость, приоритетное соединение и расширенные возможности</p>
-            <div class="hero-stats">
-                <div><div class="stat-number">∞</div><div class="stat-label">Безлимит</div></div>
-                <div><div class="stat-number">100+</div><div class="stat-label">Серверов</div></div>
-                <div><div class="stat-number">24/7</div><div class="stat-label">Приоритет</div></div>
+            <div class="hero-content">
+                <div class="hero-badge">✦ ПРЕМИУМ ДОСТУП ✦</div>
+                <h1>VIP <span>Подписка</span></h1>
+                <p>Максимальная скорость, приоритетное соединение и расширенные возможности</p>
+                <div class="hero-stats">
+                    <div><div class="stat-number">∞</div><div class="stat-label">Безлимит</div></div>
+                    <div><div class="stat-number">5+</div><div class="stat-label">Конфигов</div></div>
+                    <div><div class="stat-number">24/7</div><div class="stat-label">Приоритет</div></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-globe"></i>
             </div>
         </div>
 
         <div class="vip-card">
             <div class="vip-title">👑 VIP-подписка</div>
-            <div class="vip-subtitle">Премиум доступ ко всем серверам</div>
+            <div class="vip-subtitle">Премиум доступ ко всем конфигурациям</div>
             <div class="vip-price">∞ <small>/ безлимит</small></div>
             
             <div class="vip-features">
                 <span class="vip-feature"><i class="fas fa-bolt"></i> Максимальная скорость</span>
-                <span class="vip-feature"><i class="fas fa-globe"></i> 100+ серверов</span>
+                <span class="vip-feature"><i class="fas fa-list"></i> 5+ конфигов</span>
                 <span class="vip-feature"><i class="fas fa-shield-alt"></i> Приоритетное соединение</span>
                 <span class="vip-feature"><i class="fas fa-headset"></i> VIP-поддержка</span>
             </div>
@@ -447,14 +460,14 @@
             </h2>
             <div class="features-grid">
                 <div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3>Максимальная скорость</h3><p>До 100 Мбит/с без ограничений</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-globe"></i></div><h3>100+ серверов</h3><p>Доступ к серверам по всему миру</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-list"></i></div><h3>5+ конфигураций</h3><p>Доступ к нескольким серверам</p></div>
                 <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Приоритетное соединение</h3><p>Высокий приоритет в любой момент</p></div>
                 <div class="feature-card"><div class="feature-icon"><i class="fas fa-headset"></i></div><h3>VIP-поддержка</h3><p>Персональный менеджер 24/7</p></div>
             </div>
         </div>
 
         <div class="footer">
-            <p>© 2025-2026 KrolekVPN VIP. Премиум-сервис для стабильного соединения.</p>
+            <p>© 2025-2026 KrolekVPNReborn VIP. Премиум-сервис для стабильного соединения.</p>
             <p><a href="https://t.me/KrolekVPNReborn" target="_blank">Канал</a> | <a href="https://t.me/Kr0l3k" target="_blank">Поддержка</a></p>
         </div>
     </div>
@@ -488,4 +501,4 @@
         document.getElementById('connectBtn').addEventListener('click', connectToVIP);
     </script>
 </body>
-  </html>
+    </html>
