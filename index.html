@@ -282,6 +282,7 @@
         .step-text strong { color: #ffd700; }
         .step-text a { color: #ffd700; text-decoration: none; }
         
+        /* ========== НОВАЯ КНОПКА ========== */
         .connect-btn {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             border: none;
@@ -307,6 +308,7 @@
         }
         
         .connect-btn:active { transform: scale(0.97); }
+        /* =========================== */
         
         .features-grid {
             display: grid;
@@ -369,6 +371,60 @@
             transition: opacity 0.3s;
             pointer-events: none;
         }
+
+        /* ========== СТИЛИ ДЛЯ VIP-ПРОВЕРКИ ========== */
+        .vip-check-container {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .vip-check-container.active {
+            display: block;
+        }
+
+        .vip-check-container .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 215, 0, 0.1);
+            border-top-color: #ffd700;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .vip-check-container .status-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .vip-check-container h3 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .vip-check-container p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .vip-check-container .error-text {
+            color: #ff6b6b;
+        }
+
+        .vip-check-container .success-text {
+            color: #51cf66;
+        }
+        /* ============================================ */
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -417,6 +473,13 @@
             </div>
         </div>
 
+        <!-- ========== БЛОК ПРОВЕРКИ VIP (ПОЯВЛЯЕТСЯ ПОСЛЕ ПРОВЕРКИ) ========== -->
+        <div id="vipCheckContainer" class="vip-check-container">
+            <div id="vipCheckContent">
+                <!-- Сюда будет вставлен результат проверки -->
+            </div>
+        </div>
+
         <div class="instructions">
             <h3><i class="fas fa-book-open" style="color: #ffd700;"></i> Подключение к VIP-серверу</h3>
             
@@ -436,7 +499,7 @@
                 <div class="step-text">Готово! Приложение откроется автоматически</div>
             </div>
             
-            <button class="connect-btn" id="connectBtn">
+            <button class="connect-btn" id="connectBtn" style="display: none;">
                 <i class="fas fa-crown"></i> Подключить VIP-сервис
             </button>
         </div>
@@ -462,9 +525,91 @@
     <div id="toast" class="toast"></div>
 
     <script>
+        // ============================================================
+        // 1. ПОЛУЧАЕМ ПАРАМЕТРЫ ИЗ URL
+        // ============================================================
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user_id');
+        const token = urlParams.get('token');
+
+        // ============================================================
+        // 2. ЭЛЕМЕНТЫ
+        // ============================================================
+        const vipContainer = document.getElementById('vipCheckContainer');
+        const vipContent = document.getElementById('vipCheckContent');
+        const connectBtn = document.getElementById('connectBtn');
         const VIP_URL = "happ://crypt5/fzvdoLlspEX6qUqGPXIggaR224BzXM0e2YElIPgqmc+/1Yjya0aCwNbklJZy3wzaDAn8ERLSYdAenP3x5SyLvuicSY3moaNJBG/91DtTnUM/Pn3uYkkzXzQJ9cIVZfA22YMwSoRJL5DiXycb6jKRu+p9SZWzAJN9cqhYXY9ni5V9ketgcKAhcyBZlhXM/5a5jTIU+qlI/Mk5NV3sjxXoSmMnaRyNSng2DPBiiutYYI+/ydQFinSd1OLJeccP0aaGxyqjfzMhm2/Tg/SDPF/idpRJOvNInng02zRmXP0fxzIXlC3+iLhTpDVW1Dnws2dUC1YjGELoOgV6FTer57MEHV2GbEiV6Xj01bihun4Jc/G6WY+RFBTZ0J8qf1gVjjRQX1b76cHwVU0cMYgI0GriNoR590Ky1qzHsOxsYmon5fnK/GvyE75luuBfSQaQuQt2+OtdKR2AYkd818SiXsP7gYybTJ3C9VcKkDP7zV/z+ZhIKeYqI9RQ0UcgGpStcTqgMuqS5UDTt8O+QeJm3BLl1wLhDqikFCB1FVHl+AuwH/e0FiS0rg0KF+Rlbn4rkLywCGf9Dpg5mRh/SCeRaCZAZIy9U1MWnjYEwJiL9NWkpxOkDal6GtUNSagRRPvsHmkjnWg3m+xKL+lzDycs2+H4VCV1Ql/wm1zIGdSVKbJ2FYxmfYS94bq1rBGPMp0lQ9GGIC/6MywpO6eQsncoSt1et7o+ToGn+iW478JMOQl+gfs8T/gvIkWsZv93MiJsBAXIWUD5VLvb6Fj1ISIWWDPBvjBb+nUsw51PkIHWSNXjnqS9UiRpP0TmMq2zXTU9fXY46nmFzkYrDLhtwEdaFKxuNPfALWtwz68Ot58H1jPabvdUZDux901ozj6fjTxVsc+tEXGRpX8AYFgaR1A8OUtLGvLds/OZkAduSOta3SWFGxitd2uj8F3uqcsnfo8=ff";
-        
-        const clickSound = new Audio("https://www.soundjay.com/misc/sounds/button-click-1.mp3");
+        const BOT_TOKEN = "8992196646:AAFW46eoYJVYIX0HqPpWUOxT4bKFsV4bPbI"; // ← ЗАМЕНИ НА СВОЙ
+
+        // ============================================================
+        // 3. ФУНКЦИЯ ПРОВЕРКИ VIP
+        // ============================================================
+        function checkVipStatus() {
+            // Показываем блок с загрузкой
+            vipContainer.classList.add('active');
+            vipContent.innerHTML = `
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #aaa;">Проверка VIP-статуса...</p>
+            `;
+
+            // Если нет параметров — показываем ошибку
+            if (!userId || !token) {
+                vipContent.innerHTML = `
+                    <div class="status-icon">🔒</div>
+                    <h3>Доступ ограничен</h3>
+                    <p class="error-text">Неверная ссылка активации. Получите ссылку в боте.</p>
+                `;
+                return;
+            }
+
+            // Отправляем запрос к боту
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/checkVip`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId, token: token })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok && data.result && data.result.status === 'ok') {
+                    // VIP активен — показываем кнопку
+                    vipContent.innerHTML = `
+                        <div class="status-icon">✅</div>
+                        <h3 style="color: #51cf66;">VIP-подписка активна!</h3>
+                        <p>Нажмите кнопку ниже, чтобы подключиться к серверу.</p>
+                    `;
+                    connectBtn.style.display = 'flex';
+                } else {
+                    // VIP не активен
+                    vipContent.innerHTML = `
+                        <div class="status-icon">⛔</div>
+                        <h3>VIP-подписка не активна</h3>
+                        <p class="error-text">Оформите подписку в боте, чтобы получить доступ.</p>
+                    `;
+                    connectBtn.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка проверки VIP:', error);
+                vipContent.innerHTML = `
+                    <div class="status-icon">⚠️</div>
+                    <h3>Ошибка проверки</h3>
+                    <p class="error-text">Не удалось проверить статус подписки. Попробуйте позже.</p>
+                `;
+                connectBtn.style.display = 'none';
+            });
+        }
+
+        // ============================================================
+        // 4. ПОДКЛЮЧЕНИЕ К VIP
+        // ============================================================
+        function connectToVIP() {
+            if (navigator.vibrate) navigator.vibrate(50);
+            window.location.href = VIP_URL;
+            showToast('👑 Открываем VIP-подписку...');
+            setTimeout(() => {
+                showToast('⚠️ Если Happ не открылся, установите приложение');
+            }, 1000);
+        }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -475,17 +620,24 @@
             }, 2500);
         }
 
-        function connectToVIP() {
-            if (navigator.vibrate) navigator.vibrate(50);
-            clickSound.play().catch(e => console.log('Звук не воспроизведён'));
-            window.location.href = VIP_URL;
-            showToast('👑 Открываем VIP-подписку...');
-            setTimeout(() => {
-                showToast('⚠️ Если Happ не открылся, установите приложение');
-            }, 1000);
-        }
+        // ============================================================
+        // 5. ЗАПУСК ПРОВЕРКИ ПРИ ЗАГРУЗКЕ
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            checkVipStatus();
+        });
 
-        document.getElementById('connectBtn').addEventListener('click', connectToVIP);
+        // Кнопка
+        connectBtn.addEventListener('click', connectToVIP);
+
+        // ============================================================
+        // 6. ОБРАБОТКА TELEGRAM WEBAPP (если открыто через бота)
+        // ============================================================
+        if (window.Telegram && window.Telegram.WebApp) {
+            const tg = window.Telegram.WebApp;
+            tg.ready();
+            tg.expand();
+        }
     </script>
 </body>
 </html>
