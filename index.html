@@ -16,7 +16,6 @@
             position: relative;
         }
         
-        /* Анимированный фон — оранжевый, чёрный, жёлтый */
         body::before {
             content: '';
             position: fixed;
@@ -172,7 +171,6 @@
         .stat-number { font-size: 28px; font-weight: 700; color: #ffd700; }
         .stat-label { font-size: 13px; color: #aaa; }
         
-        /* VIP-карточка */
         .vip-card {
             background: linear-gradient(145deg, rgba(20, 15, 5, 0.9), rgba(10, 10, 10, 0.95));
             border-radius: 32px;
@@ -251,7 +249,6 @@
             margin: 20px 0;
         }
         
-        /* Инструкция */
         .instructions {
             background: rgba(255,255,255,0.03);
             border-radius: 24px;
@@ -370,7 +367,6 @@
             pointer-events: none;
         }
 
-        /* ===== БЛОК ДЛЯ БРАУЗЕРА ===== */
         .browser-block {
             text-align: center;
             padding: 40px 20px;
@@ -435,7 +431,6 @@
 <body>
     <div class="container" id="app">
 
-        <!-- ===== VIP-КОНТЕНТ (ДЛЯ TELEGRAM) ===== -->
         <div id="vipContent">
             <nav class="navbar">
                 <div class="logo">
@@ -522,7 +517,6 @@
             </div>
         </div>
 
-        <!-- ===== БЛОК ДЛЯ БРАУЗЕРА ===== -->
         <div id="browserBlock" class="browser-block">
             <div class="icon">🔒</div>
             <h2>Доступ ограничен</h2>
@@ -541,15 +535,11 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- ========== ЗАШИФРОВАННЫЙ VIP-КОНФИГ ========== -->
     <div style="display:none;" id="vipConfig" data-vip="
         H4sIAAAAAAAA/6tWKkktVtJRKkktVlJQyi1WUkrNS85PTMpJVChPLS7JL8pVKMlXSMxLUUjOL1LIT1MoT8xTKEpVSM5PSU1RSK1QSM7JzEtXyE2F8PJTEjPzgIpApOIL0pWS84sUivMzc1KLSzLz80D6kmDqE4sUchLLEnNSc1IhJqUkh9QW5ZeVQq2EOnJBKVmhqCQzt7gktagYpBaqpBgkCFdZBBUFACpxYagCAAAA
     "></div>
 
     <script>
-        // ============================================================
-        // 1. ЗАГРУЗКА РАСШИФРОВЩИКА
-        // ============================================================
         function loadPako() {
             return new Promise((resolve) => {
                 if (window.pako) { resolve(window.pako); return; }
@@ -577,9 +567,6 @@
             }
         }
 
-        // ============================================================
-        // 2. ПРОВЕРКА — TELEGRAM ИЛИ БРАУЗЕР
-        // ============================================================
         function isTelegramWebApp() {
             if (window.Telegram && window.Telegram.WebApp) return true;
             if (window.location.search.includes('tgWebAppData')) return true;
@@ -599,9 +586,6 @@
             setTimeout(() => { toast.style.opacity = '0'; }, 3000);
         }
 
-        // ============================================================
-        // 3. ПОКАЗЫВАЕМ НУЖНЫЙ БЛОК
-        // ============================================================
         if (isTelegram) {
             vipContent.style.display = 'block';
             browserBlock.style.display = 'none';
@@ -621,20 +605,28 @@
 
             document.getElementById('connectBtn').addEventListener('click', function() {
                 const vipUrl = "happ://crypt5/fzvdoLlspEX6qUqGPXIggaR224BzXM0e2YElIPgqmc+/1Yjya0aCwNbklJZy3wzaDAn8ERLSYdAenP3x5SyLvuicSY3moaNJBG/91DtTnUM/Pn3uYkkzXzQJ9cIVZfA22YMwSoRJL5DiXycb6jKRu+p9SZWzAJN9cqhYXY9ni5V9ketgcKAhcyBZlhXM/5a5jTIU+qlI/Mk5NV3sjxXoSmMnaRyNSng2DPBiiutYYI+/ydQFinSd1OLJeccP0aaGxyqjfzMhm2/Tg/SDPF/idpRJOvNInng02zRmXP0fxzIXlC3+iLhTpDVW1Dnws2dUC1YjGELoOgV6FTer57MEHV2GbEiV6Xj01bihun4Jc/G6WY+RFBTZ0J8qf1gVjjRQX1b76cHwVU0cMYgI0GriNoR590Ky1qzHsOxsYmon5fnK/GvyE75luuBfSQaQuQt2+OtdKR2AYkd818SiXsP7gYybTJ3C9VcKkDP7zV/z+ZhIKeYqI9RQ0UcgGpStcTqgMuqS5UDTt8O+QeJm3BLl1wLhDqikFCB1FVHl+AuwH/e0FiS0rg0KF+Rlbn4rkLywCGf9Dpg5mRh/SCeRaCZAZIy9U1MWnjYEwJiL9NWkpxOkDal6GtUNSagRRPvsHmkjnWg3m+xKL+lzDycs2+H4VCV1Ql/wm1zIGdSVKbJ2FYxmfYS94bq1rBGPMp0lQ9GGIC/6MywpO6eQsncoSt1et7o+ToGn+iW478JMOQl+gfs8T/gvIkWsZv93MiJsBAXIWUD5VLvb6Fj1ISIWWDPBvjBb+nUsw51PkIHWSNXjnqS9UiRpP0TmMq2zXTU9fXY46nmFzkYrDLhtwEdaFKxuNPfALWtwz68Ot58H1jPabvdUZDux901ozj6fjTxVsc+tEXGRpX8AYFgaR1A8OUtLGvLds/OZkAduSOta3SWFGxitd2uj8F3uqcsnfo8=ff";
-                window.location.href = vipUrl;
+                
                 showToast('👑 Открываем VIP-подписку...');
+                
+                if (window.Telegram && window.Telegram.WebApp) {
+                    try {
+                        window.Telegram.WebApp.openLink(vipUrl);
+                    } catch(e) {
+                        window.open(vipUrl, '_blank');
+                    }
+                } else {
+                    window.open(vipUrl, '_blank');
+                }
+                
                 setTimeout(() => {
                     showToast('⚠️ Если Happ не открылся, установите приложение');
-                }, 1500);
+                }, 3000);
             });
         } else {
             vipContent.style.display = 'none';
             browserBlock.style.display = 'block';
         }
 
-        // ============================================================
-        // 4. ПАРАМЕТР open=bot
-        // ============================================================
         const params = new URLSearchParams(window.location.search);
         if (params.get('open') === 'bot') {
             window.location.href = 'https://t.me/Krolek_VPN_Reborn_bot';
