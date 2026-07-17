@@ -171,6 +171,13 @@
             display: flex;
             gap: 30px;
             margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
         }
         
         .stat-number { font-size: 32px; font-weight: 700; color: #ffd700; }
@@ -354,8 +361,10 @@
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; }
-            .hero-stats { gap: 20px; flex-wrap: wrap; }
-            .vip-features { gap: 15px; }
+            .hero-stats { gap: 16px; }
+            .stat-number { font-size: 24px; }
+            .stat-label { font-size: 12px; }
+            .vip-features { gap: 12px; }
             .navbar { flex-direction: column; text-align: center; }
             .step { flex-wrap: wrap; text-align: center; justify-content: center; }
             .hero-image i { font-size: 150px; }
@@ -401,9 +410,18 @@
                 <h1>VIP <span>Подписка</span></h1>
                 <p>Максимальная скорость, приоритетное соединение и расширенные возможности</p>
                 <div class="hero-stats">
-                    <div><div class="stat-number">∞</div><div class="stat-label">Безлимит</div></div>
-                    <div><div class="stat-number">5+</div><div class="stat-label">Конфигов</div></div>
-                    <div><div class="stat-number">24/7</div><div class="stat-label">Приоритет</div></div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Безлимит</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Конфигов</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Приоритет</span>
+                    </div>
                 </div>
             </div>
             <div class="hero-image">
@@ -501,4 +519,4 @@
         document.getElementById('connectBtn').addEventListener('click', connectToVIP);
     </script>
 </body>
-    </html>
+</html>
