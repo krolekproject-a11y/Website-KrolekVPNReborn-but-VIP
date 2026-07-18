@@ -296,6 +296,7 @@
             justify-content: center;
             gap: 12px;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            text-decoration: none;
         }
         
         .connect-btn:hover {
@@ -495,7 +496,7 @@
                 </div>
                 
                 <!-- ========== РАБОЧАЯ КНОПКА С happ:// ========== -->
-                <a href="happ://https://raw.githubusercontent.com/krolekproject-a11y/VIPKrolekVPNReborn---GUI-Poimi-Gde-naidesh/refs/heads/main/KrolekVIP" class="connect-btn" id="connectBtn">
+                <a href="happ://crypt5/fzvdxONpKs6mvd244ZEWCie324indR0ODTyzhxUULoeYHn1V8ka2wYLFZCtLXZsjtG7MaqrN6Dg/SbA1Zamc0ifSJoFTzXH+RX9hHOKfTeifz+kSu9vM3omr688zDn3pHApFN2QxCVpgFoXhOa3204iOxLCBt/7P31t6K70h5UMqDXB/FnHvDBm2EHSErZokEFmFIsBY6di07niW9nPGqK5CSBELAo6GrnItrEBiHmCO9HYFKv7X8aIfj42Hcf+GpXTFf/tBlKr/z0bWQFs6IHY0aJsYNx14fwZ0tQeRAxp+tCt4RWv5gBAb2lhuhLk+v5T5aloTGQTjFfF37oQGAFOrAaWdNvFWVX9V/8qf1oRKGvN2FAc91L83YVWBtLOhI9wJdhii99XuEsJR36S9GnlY7itrUbu4aUD+3kBbyns5vrcC7dk8kdRBZgfMR6fYsyLq2ybpKCaHGc09MpgV0r+pH5BdyJiJQpMrXqF2c3FPcyxhc6uBsL3N6gZAuxc0ZeRQLYlShwc56OcZwIMNkPB5YEgoweoTxTfQHjR1lRc98n4TeoD6zxLtbLD7uR2LgoU8GAzoGUj4uiniGUWXZYzfHcRNq+8NEEQF4BeRWIBCLQE/C4O0nNmy6Q9Uk+T6N6bS6LenzDQpf0GHaDcVEs0lTMloT/LEyB2a8oGx3sDkT6FIhGNmB7f5H5yr4ggzcST1pquaia7Q2R4FC+2HWn4RdTITBoq+L/X6ks7Fr10DUDFPJdG/t11il/gwGlx+lRaLy6bHFCwizKzHZkBapB6JE3ju7h4T719bWf/cmxJ9hz193cH+KuD+0MFAHp9/2D+nMU1CLkvt/udPdxJs5QD2g0FtfpwmQXsVwv8/+8Gpsw+LdFxfXpBUyo4Lm7OszuN7oz067proiwVZX7+DwVv3MKmZY9xBBrpNRUN/+3mol1D+eZG0hdtnfoU=ff" class="connect-btn" id="connectBtn">
                     <i class="fas fa-crown"></i> Подключить VIP-сервис
                 </a>
             </div>
@@ -536,7 +537,6 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- ========== ЗАШИФРОВАННЫЙ VIP-КОНФИГ (НЕ ТРОГАТЬ) ========== -->
     <div style="display:none;" id="vipConfig" data-vip="
         H4sIAAAAAAAA/6tWKkktVtJRKkktVlJQyi1WUkrNS85PTMpJVChPLS7JL8pVKMlXSMxLUUjOL1LIT1MoT8xTKEpVSM5PSU1RSK1QSM7JzEtXyE2F8PJTEjPzgIpApOIL0pWS84sUivMzc1KLSzLz80D6kmDqE4sUchLLEnNSc1IhJqUkh9QW5ZeVQq2EOnJBKVmhqCQzt7gktagYpBaqpBgkCFdZBBUFACpxYagCAAAA
     "></div>
@@ -607,7 +607,7 @@
 
             // ========== ОБРАБОТЧИК ДЛЯ КНОПКИ ==========
             document.getElementById('connectBtn').addEventListener('click', function(e) {
-                // Ничего не делаем — ссылка работает сама по себе
+                // Ссылка уже открывается, просто показываем уведомление
                 showToast('👑 Открываем VIP-подписку...');
                 setTimeout(() => {
                     showToast('⚠️ Если Happ не открылся, установите приложение');
@@ -624,4 +624,4 @@
         }
     </script>
 </body>
-</html>
+        </html>
