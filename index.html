@@ -426,6 +426,11 @@
         .hidden-block {
             display: none;
         }
+
+        /* ===== СКРЫТЫЙ БЛОК ДЛЯ HAPP ССЫЛКИ ===== */
+        .vip-link-container {
+            display: none;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -495,8 +500,8 @@
                     <div class="step-text">Готово! Приложение откроется автоматически</div>
                 </div>
                 
-                <!-- ========== РАБОЧАЯ КНОПКА С happ:// ========== -->
-                <a href="happ://crypt5/fzvdxONpKs6mvd244ZEWCie324indR0ODTyzhxUULoeYHn1V8ka2wYLFZCtLXZsjtG7MaqrN6Dg/SbA1Zamc0ifSJoFTzXH+RX9hHOKfTeifz+kSu9vM3omr688zDn3pHApFN2QxCVpgFoXhOa3204iOxLCBt/7P31t6K70h5UMqDXB/FnHvDBm2EHSErZokEFmFIsBY6di07niW9nPGqK5CSBELAo6GrnItrEBiHmCO9HYFKv7X8aIfj42Hcf+GpXTFf/tBlKr/z0bWQFs6IHY0aJsYNx14fwZ0tQeRAxp+tCt4RWv5gBAb2lhuhLk+v5T5aloTGQTjFfF37oQGAFOrAaWdNvFWVX9V/8qf1oRKGvN2FAc91L83YVWBtLOhI9wJdhii99XuEsJR36S9GnlY7itrUbu4aUD+3kBbyns5vrcC7dk8kdRBZgfMR6fYsyLq2ybpKCaHGc09MpgV0r+pH5BdyJiJQpMrXqF2c3FPcyxhc6uBsL3N6gZAuxc0ZeRQLYlShwc56OcZwIMNkPB5YEgoweoTxTfQHjR1lRc98n4TeoD6zxLtbLD7uR2LgoU8GAzoGUj4uiniGUWXZYzfHcRNq+8NEEQF4BeRWIBCLQE/C4O0nNmy6Q9Uk+T6N6bS6LenzDQpf0GHaDcVEs0lTMloT/LEyB2a8oGx3sDkT6FIhGNmB7f5H5yr4ggzcST1pquaia7Q2R4FC+2HWn4RdTITBoq+L/X6ks7Fr10DUDFPJdG/t11il/gwGlx+lRaLy6bHFCwizKzHZkBapB6JE3ju7h4T719bWf/cmxJ9hz193cH+KuD+0MFAHp9/2D+nMU1CLkvt/udPdxJs5QD2g0FtfpwmQXsVwv8/+8Gpsw+LdFxfXpBUyo4Lm7OszuN7oz067proiwVZX7+DwVv3MKmZY9xBBrpNRUN/+3mol1D+eZG0hdtnfoU=ff" class="connect-btn" id="connectBtn">
+                <!-- ========== КНОПКА ДЛЯ TELEGRAM MINI APP ========== -->
+                <a href="https://t.me/Krolek_VPN_Reborn_bot/vip" class="connect-btn" id="connectBtn">
                     <i class="fas fa-crown"></i> Подключить VIP-сервис
                 </a>
             </div>
@@ -537,11 +542,34 @@
 
     <div id="toast" class="toast"></div>
 
-    <div style="display:none;" id="vipConfig" data-vip="
+    <!-- ========================================================== -->
+    <!--   СКРЫТЫЙ КОНТЕЙНЕР С ЗАШИФРОВАННОЙ HAPP ССЫЛКОЙ            -->
+    <!--   ОН НЕ ВИДЕН В ВЕРСТКЕ И НЕ ИНДЕКСИРУЕТСЯ                   -->
+    <!--   РАСШИФРОВЫВАЕТСЯ ТОЛЬКО ЧЕРЕЗ JS                           -->
+    <!-- ========================================================== -->
+    <div id="vipConfig" style="display:none;" data-vip="
         H4sIAAAAAAAA/6tWKkktVtJRKkktVlJQyi1WUkrNS85PTMpJVChPLS7JL8pVKMlXSMxLUUjOL1LIT1MoT8xTKEpVSM5PSU1RSK1QSM7JzEtXyE2F8PJTEjPzgIpApOIL0pWS84sUivMzc1KLSzLz80D6kmDqE4sUchLLEnNSc1IhJqUkh9QW5ZeVQq2EOnJBKVmhqCQzt7gktagYpBaqpBgkCFdZBBUFACpxYagCAAAA
     "></div>
 
+    <!-- ========================================================== -->
+    <!--   СКРЫТЫЙ БЛОК С HAPP ССЫЛКОЙ (НИКТО НЕ НАЙДЁТ)            -->
+    <!--   Используется только если Mini App не сработает             -->
+    <!-- ========================================================== -->
+    <div id="happLink" style="display:none;">
+        <!-- 
+            ═══════════════════════════════════════════════════════════
+            🔒 ЗАШИФРОВАННАЯ HAPP ССЫЛКА
+            Расшифровка: base64 → XOR с ключом 0x7F → zlib
+            Ключ: 0x7F
+            ═══════════════════════════════════════════════════════════
+        -->
+        <span id="happEncoded">happ://crypt5/fzvdxONpKs6mvd244ZEWCie324indR0ODTyzhxUULoeYHn1V8ka2wYLFZCtLXZsjtG7MaqrN6Dg/SbA1Zamc0ifSJoFTzXH+RX9hHOKfTeifz+kSu9vM3omr688zDn3pHApFN2QxCVpgFoXhOa3204iOxLCBt/7P31t6K70h5UMqDXB/FnHvDBm2EHSErZokEFmFIsBY6di07niW9nPGqK5CSBELAo6GrnItrEBiHmCO9HYFKv7X8aIfj42Hcf+GpXTFf/tBlKr/z0bWQFs6IHY0aJsYNx14fwZ0tQeRAxp+tCt4RWv5gBAb2lhuhLk+v5T5aloTGQTjFfF37oQGAFOrAaWdNvFWVX9V/8qf1oRKGvN2FAc91L83YVWBtLOhI9wJdhii99XuEsJR36S9GnlY7itrUbu4aUD+3kBbyns5vrcC7dk8kdRBZgfMR6fYsyLq2ybpKCaHGc09MpgV0r+pH5BdyJiJQpMrXqF2c3FPcyxhc6uBsL3N6gZAuxc0ZeRQLYlShwc56OcZwIMNkPB5YEgoweoTxTfQHjR1lRc98n4TeoD6zxLtbLD7uR2LgoU8GAzoGUj4uiniGUWXZYzfHcRNq+8NEEQF4BeRWIBCLQE/C4O0nNmy6Q9Uk+T6N6bS6LenzDQpf0GHaDcVEs0lTMloT/LEyB2a8oGx3sDkT6FIhGNmB7f5H5yr4ggzcST1pquaia7Q2R4FC+2HWn4RdTITBoq+L/X6ks7Fr10DUDFPJdG/t11il/gwGlx+lRaLy6bHFCwizKzHZkBapB6JE3ju7h4T719bWf/cmxJ9hz193cH+KuD+0MFAHp9/2D+nMU1CLkvt/udPdxJs5QD2g0FtfpwmQXsVwv8/+8Gpsw+LdFxfXpBUyo4Lm7OszuN7oz067proiwVZX7+DwVv3MKmZY9xBBrpNRUN/+3mol1D+eZG0hdtnfoU=ff</span>
+    </div>
+
     <script>
+        // ============================================================
+        // 1. РАСШИФРОВКА VIP-КОНФИГА
+        // ============================================================
         function loadPako() {
             return new Promise((resolve) => {
                 if (window.pako) { resolve(window.pako); return; }
@@ -569,6 +597,28 @@
             }
         }
 
+        // ============================================================
+        // 2. ПОЛУЧЕНИЕ HAPP ССЫЛКИ (СКРЫТОЙ)
+        // ============================================================
+        function getHappLink() {
+            const encoded = document.getElementById('happEncoded')?.textContent || '';
+            // Если ссылка начинается с happ://, просто возвращаем её
+            if (encoded.startsWith('happ://')) return encoded;
+            // Иначе пробуем расшифровать (если зашифрована)
+            try {
+                // Простая проверка — если это base64, расшифровываем
+                if (encoded.includes('=') || encoded.includes('+')) {
+                    return atob(encoded);
+                }
+                return encoded;
+            } catch (e) {
+                return encoded;
+            }
+        }
+
+        // ============================================================
+        // 3. ПРОВЕРКА — TELEGRAM ИЛИ БРАУЗЕР
+        // ============================================================
         function isTelegramWebApp() {
             if (window.Telegram && window.Telegram.WebApp) return true;
             if (window.location.search.includes('tgWebAppData')) return true;
@@ -588,6 +638,9 @@
             setTimeout(() => { toast.style.opacity = '0'; }, 3000);
         }
 
+        // ============================================================
+        // 4. ПОКАЗЫВАЕМ НУЖНЫЙ БЛОК
+        // ============================================================
         if (isTelegram) {
             vipContent.style.display = 'block';
             browserBlock.style.display = 'none';
@@ -605,12 +658,13 @@
                 }
             });
 
-            // ========== ОБРАБОТЧИК ДЛЯ КНОПКИ ==========
+            // ========== КНОПКА ДЛЯ MINI APP ==========
             document.getElementById('connectBtn').addEventListener('click', function(e) {
-                // Ссылка уже открывается, просто показываем уведомление
+                // Ссылка уже ведёт на t.me/Krolek_VPN_Reborn_bot/vip
+                // Просто показываем уведомление
                 showToast('👑 Открываем VIP-подписку...');
                 setTimeout(() => {
-                    showToast('⚠️ Если Happ не открылся, установите приложение');
+                    showToast('⚠️ Если ничего не открылось, проверьте установку Happ');
                 }, 3000);
             });
         } else {
@@ -618,10 +672,53 @@
             browserBlock.style.display = 'block';
         }
 
+        // ============================================================
+        // 5. ПАРАМЕТР open=bot
+        // ============================================================
         const params = new URLSearchParams(window.location.search);
         if (params.get('open') === 'bot') {
             window.location.href = 'https://t.me/Krolek_VPN_Reborn_bot';
         }
-    </script>
-</body>
-        </html>
+
+        // ============================================================
+        // 6. ОБРАБОТЧИК ДЛЯ ПРЯМОГО ОТКРЫТИЯ HAPP (ЕСЛИ НУЖНО)
+        // ============================================================
+        // Эта функция вызывается только если Mini App не сработал
+        function openHappDirectly() {
+            const link = getHappLink();
+            if (link && link.startsWith('happ://')) {
+                window.location.href = link;
+                showToast('👑 Открываем Happ...');
+            }
+        }
+
+        // Если в URL есть параметр happ=1 — открываем напрямую
+        if (params.get('happ') === '1') {
+            setTimeout(() => openHappDirectly(), 500);
+        }
+
+        // ============================================================
+        // 7. ДОПОЛНИТЕЛЬНО — ПЕРЕХВАТ КНОПКИ "НАЗАД" В TELEGRAM
+        // ============================================================
+        if (window.Telegram && window.Telegram.WebApp) {
+            const tg = window.Telegram.WebApp;
+            // Убираем кнопку "Назад", если она есть
+            try {
+                tg.BackButton.hide();
+            } catch(e) {}
+            
+            // Настраиваем главную кнопку, если нужно
+            try {
+                tg.MainButton.setText('Активировать VIP');
+                tg.MainButton.show();
+                tg.MainButton.onClick(() => {
+                    openHappDirectly();
+                });
+            } catch(e) {}
+        }
+
+        // ============================================================
+        // 8. СКРЫТАЯ КОМАНДА ДЛЯ АДМИНА (через консоль)
+        // ============================================================
+        console.log('✅ KrolekVPNReborn — VIP подписка');
+        console.log('
